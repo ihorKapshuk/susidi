@@ -1,3 +1,10 @@
+body{ 
+    min-height: 100vh;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+}
+
 a{
     text-decoration: none;
 }
@@ -12,4 +19,33 @@ footer{
 }
 #user_office{
     margin-left: 600px;
+}
+
+main{
+    flex:1;
+}
+
+#login_but{
+    color:rgb(255, 255, 255);
+    background-color: #0d6efd;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 3px;
+}
+#login_but:hover{
+    color:#e2ecf9;
+    background-color: #0d6efd;
+}
+
+#signup_but{
+    color:rgb(255, 255, 255);
+    background-color: #198754;
+    text-decoration: none;
+    padding: 6px;
+    border-radius: 3px;
+}
+
+#signup_but:hover{
+    color:#caf9d1;
+    background-color: #198754;
 }

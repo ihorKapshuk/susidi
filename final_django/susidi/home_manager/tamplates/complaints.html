@@ -3,8 +3,16 @@
 {% block title %}Скарги{% endblock %}
 
 {% block content %}
+    {% if user.is_authenticated %}
     <div class="mt-4 p-5 bg-danger text-white rounded">
         <h1>Скарги🙁</h1>
         <p>На цій сторінці можете розмістити скаргу (до керівництва ОСББ чи інших жителів дома) та побачити скарги інших.</p>
     </div>
+    {% else %}
+        <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
+            <h1>Ви ще не увійшли!</h1>
+            <a href="{% url 'login' %}" id="login_but">Увійти</a><br><br>
+            <a href="{% url 'signup' %}" id="signup_but">Зареєструватись</a>
+        </div>
+    {% endif %}
 {% endblock %}

@@ -3,6 +3,7 @@
 {% block title %}Головна{% endblock %}
 
 {% block content %}
+    {% if user.is_authenticated %}
     <div class="mt-4 p-5 bg-success text-white rounded">
         <h1><a href="http://127.0.0.1:8000/home_manager/announcements/" class="text-white">Оголошення</a>📣</h1>
         <p>На цій сторінці можете побачити оголошення від керівництва ОСББ.</p>
@@ -19,4 +20,11 @@
         <h1><a href="http://127.0.0.1:8000/home_manager/helpful/" class="text-white">Корисна інформація</a>😀</h1>
         <p>На цій сторінці можете отримати контактну інформацію керівництва ОСББ та комунальних служб.</p>
     </div>
+    {% else %}
+        <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
+            <h1>Ви ще не увійшли!</h1>
+            <a href="{% url 'login' %}" id="login_but">Увійти</a><br><br>
+            <a href="{% url 'signup' %}" id="signup_but">Зареєструватись</a>
+        </div>
+    {% endif %}
 {% endblock %}
