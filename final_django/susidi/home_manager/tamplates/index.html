@@ -1,30 +1,46 @@
 <!doctype html>
+<html lang="uk">
 {% load django_bootstrap5 %}
   <head>
     <meta charset="utf-8">
     <title>{% block title %}{% endblock %}</title>
     {% bootstrap_css %}
     {% bootstrap_javascript %}
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="icon" type="image/svg+xml" sizes="any"        href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏙️</text></svg>"/>
   </head>
   <body>
     <header>
-      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-warning fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="#">Головна</a>
+          <a class="navbar-brand text-dark" href="http://127.0.0.1:8000/home_manager/main/">Головна </a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link" href="#">Оголошення для жителів</a>
-              <a class="nav-link" href="#">Загублені речі</a>
-              <a class="nav-link" href="#">Скарги</a>
+              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/announcements/">Оголошення для жителів</a>
+              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/complaints/">Скарги</a>
+              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/lost/">Загублені речі</a>
+              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/helpful/">Корисна інформація</a>
+              <a class="nav-link text-danger" href="http://127.0.0.1:8000/home_manager/user_office/" id="user_office">Особистий кабінет</a>
             </div>
           </div>
         </div>
       </nav>
     </header>
-    <main>
+    <main style="margin-top: 70px;">
       {% block content %}
       {% endblock %}
     </main>
-    <footer></footer>
+    <footer class="py-3 mt-4 bg-secondary">
+      <ul class="nav justify-content-center border-bottom border-dark pb-3 mb-3">
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/main/" class="nav-link px-2 text-body-secondary text-light">Головна</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/announcements/" class="nav-link px-2 text-body-secondary text-light">Оголошення для жителів</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/complaints/" class="nav-link px-2 text-body-secondary text-light">Скарги</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/lost/" class="nav-link px-2 text-body-secondary text-light">Загублені речі</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/helpful/" class="nav-link px-2 text-body-secondary text-light">Корисна інформація</a></li>
+        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/user_office/" class="nav-link px-2 text-body-secondary text-light">Особистий кабінет</a></li>
+      </ul>
+      <p class="text-center text-body-secondary text-light">© 2024 Сусіди</p>
+    </footer>
   </body>
 </html>
