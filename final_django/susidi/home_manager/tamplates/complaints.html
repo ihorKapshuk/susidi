@@ -9,10 +9,20 @@
         <p>На цій сторінці можете розмістити скаргу (до керівництва ОСББ чи інших жителів дома) та побачити скарги інших.</p>
     </div>
     {% else %}
-        <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
-            <h1>Ви ще не увійшли!</h1>
-            <a href="{% url 'login' %}" id="login_but">Увійти</a><br><br>
-            <a href="{% url 'signup' %}" id="signup_but">Зареєструватись</a>
-        </div>
+    <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
+        <h1>Ви ще не увійшли!</h1><br>
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
+            </form>
+            <form action="{% url 'signup' %}" method="post" class="my-1">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
+            </form>
+            <form action="{% url 'password_reset' %}" method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary btn-lg">Забули пароль?</button>
+            </form>
+    </div>
     {% endif %}
 {% endblock %}
