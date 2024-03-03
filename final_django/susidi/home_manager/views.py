@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -17,5 +18,8 @@ def lost(request):
 def helpful(request):
     return render(request, "helpful.html")
 
+@login_required
 def user_office(request):
-    return render(request, "user_office.html")
+    cur_user = request.user
+    my_name = cur_user.username
+    return render(request, "user_office.html", context={"cur_name" : my_name})

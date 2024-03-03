@@ -6,6 +6,8 @@
     {% if user.is_authenticated %}
     <div class="mt-4 p-5 bg-secondary text-white rounded">
         <h1>Особистий кабінет🧑</h1>
+        <h2>Вітаю вас <b><i>{{ cur_name }}</i></b>!</h2>
+        <h3>{% if user.is_superuser %}+{% else %}-{% endif %}</h3>
         <p></p>
     </div>
     <form action="{% url 'password_change' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
@@ -26,10 +28,6 @@
             <form action="{% url 'signup' %}" method="post" class="my-1">
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
-            </form>
-            <form action="{% url 'password_reset' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg">Забули пароль?</button>
             </form>
     </div>
     {% endif %}

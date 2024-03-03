@@ -19,10 +19,6 @@
                 {% csrf_token %}
                 <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
             </form>
-            <form action="{% url 'password_reset' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg">Забули пароль?</button>
-            </form>
     </div>
     {% endif %}
 {% endblock %}
