@@ -5,9 +5,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div>
 <form method="post">
   {% csrf_token %}
   {{ form|crispy }}
   <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
 </form>
+<form action="{% url 'signup' %}" method="post" class="my-1">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
+</form>
+</div>
 {% endblock %}

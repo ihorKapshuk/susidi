@@ -8,17 +8,5 @@
         <h1>Загублені речі🕵️</h1>
         <p>На цій сторінці можете повідомити про знахідку чи розмістити оголошення про пошук речі.</p>
     </div>
-    {% else %}
-    <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
-        <h1>Ви ще не увійшли!</h1><br>
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
-            </form>
-            <form action="{% url 'signup' %}" method="post" class="my-1">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
-            </form>
-    </div>
     {% endif %}
 {% endblock %}

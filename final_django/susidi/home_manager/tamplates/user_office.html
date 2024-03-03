@@ -7,7 +7,6 @@
     <div class="mt-4 p-5 bg-secondary text-white rounded">
         <h1>Особистий кабінет🧑</h1>
         <h2>Вітаю вас <b><i>{{ cur_name }}</i></b>!</h2>
-        <h3>{% if user.is_superuser %}+{% else %}-{% endif %}</h3>
         <p></p>
     </div>
     <form action="{% url 'password_change' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
@@ -18,17 +17,11 @@
         {% csrf_token %}
         <button type="submit" class="btn btn-danger btn-lg">Вийти</button>
     </form>
-    {% else %}
-    <div style="text-align: center; padding: 20px; border-radius: 8px; margin-top: 220px;">
-        <h1>Ви ще не увійшли!</h1><br>
-            <form action="{% url 'login' %}" method="post">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-primary btn-lg">Увійти</button>
-            </form>
-            <form action="{% url 'signup' %}" method="post" class="my-1">
-                {% csrf_token %}
-                <button type="submit" class="btn btn-success btn-lg">Зареєструватись</button>
-            </form>
-    </div>
+    {% if user.is_superuser %}
+    <form action="{% url 'nums' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-info btn-lg">Управління користувачами</button>
+    </form>
+    {% endif %}
     {% endif %}
 {% endblock %}
