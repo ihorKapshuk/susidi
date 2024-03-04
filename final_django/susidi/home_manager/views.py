@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
@@ -49,7 +50,7 @@ def add_num(request):
             except ObjectDoesNotExist:
                 obj = PhoneNumbers()
                 obj.phone_number = phone_
-                obj.owner_id = -1
+                obj.owner_id = ""
                 obj.is_account_created = False
                 obj.save()
                 return HttpResponseRedirect('/home_manager/nums/')
@@ -60,7 +61,15 @@ def add_num(request):
 @login_required
 def del_num(request, id):
     obj = PhoneNumbers.objects.get(id=id)
+    username_ = obj.owner_id
     if request.method == "POST":
-        obj.delete()
-        return HttpResponseRedirect("/home_manager/nums/")
+        try:
+            user_obj = User.objects.get(username=username_)
+        except User.DoesNotExist:
+            obj.delete()
+            return HttpResponseRedirect("/home_manager/nums/")
+        else:
+            user_obj.delete()
+            obj.delete()
+            return HttpResponseRedirect("/home_manager/nums/")
     return render(request, "nums_del.html", context={"nums" : obj})

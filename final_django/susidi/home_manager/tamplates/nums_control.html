@@ -37,7 +37,17 @@
     </form>
     {% for num in nums %}
     <div class="mt-4 p-5 bg-secondary text-white rounded">
-      <h2>{{ num.owner_id }}  :  {{ num.phone_number }}  :  {% if num.is_account_created == True %}Зайнято{% else %}Не зайнято{% endif %} <a href="{% url 'del_num' num.id %}" class="danger-link">Видалити</a></h2>
+      <h2>{% if num.owner_id == "" %}
+        -
+        {% else %}
+        {{num.owner_id}}
+        {% endif %}
+        : {{ num.phone_number }} :
+        {% if num.is_account_created == True %}
+        Зайнято
+        {% else %}
+        Не зайнято
+        {% endif %} <a href="{% url 'del_num' num.id %}" class="danger-link">Видалити</a></h2>
     </div>
     {% endfor %}
     {% endif %}

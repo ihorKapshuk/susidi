@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-
+from django.contrib.auth.models import User
 # Create your views here.
 from django.contrib.auth import login, authenticate
 from .models import PhoneNumbers
@@ -12,7 +12,7 @@ def signup(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get('username')
+            username_ = form.cleaned_data.get('username')
             raw_password = form.cleaned_data.get('password1')
             phone_ = form.cleaned_data.get('phone_number')
             try:
@@ -21,7 +21,8 @@ def signup(request):
                 return render(request, 'registration/signup.html', {'form': form})
             else:
                 PhoneNumbers.objects.filter(phone_number=phone_).update(is_account_created=True)
-                user = authenticate(username=username, password=raw_password)
+                PhoneNumbers.objects.filter(phone_number=phone_).update(owner_id=username_)
+                user = authenticate(username=username_, password=raw_password)
                 login(request, user)
                 return redirect('main')
     else:
