@@ -1,0 +1,47 @@
+{% extends "reg_index.html" %}
+
+{% block title %}Видалення номеру{% endblock %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<style>
+  /* Styles for the success button */
+  .success-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px;
+    margin-left: 0px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #5cb85c; /* Bootstrap success button color */
+    border-color: #4cae4c; /* Bootstrap success button border color */
+    text-decoration: none;
+    width: 258px;
+  }
+
+  /* Hover effect for the success button */
+  .success-link:hover {
+    background-color: #4cae4c; /* Bootstrap success button hover color */
+    border-color: #4cae4c; /* Bootstrap success button hover border color */
+  }
+</style>
+<div>
+{% if user.is_superuser %}
+<form action="" method="post">
+  {% csrf_token %}
+  <h1>Хочите видалити номер?</h1>
+  <input type="submit" value="Так" class="btn btn-danger"><br>
+  <a href="{% url 'nums' %}" class="success-link">Ні</a>
+</form>
+</div>
+{% endif %}
+{% endblock %}

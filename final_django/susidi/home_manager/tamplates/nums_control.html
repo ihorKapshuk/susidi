@@ -1,15 +1,44 @@
-{% extends "reg_index.html" %}
+{% extends "index.html" %}
 
 {% block title %}Управління номерами{% endblock %}
 
-{% load crispy_forms_tags %}
-
 {% block content %}
-<div>
-<form method="post">
-  {% csrf_token %}
-  {{ form|crispy }}
-  <button type="submit" class="btn btn-primary btn-lg">Додати</button>
-</form>
-</div>
+<style>
+  /* Styles for the danger button */
+  .danger-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #d9534f; /* Bootstrap danger button color */
+    border-color: #d43f3a; /* Bootstrap danger button border color */
+    text-decoration: none;
+  }
+
+  /* Hover effect for the danger button */
+  .danger-link:hover {
+    background-color: #d2322d; /* Bootstrap danger button hover color */
+    border-color: #ac2925; /* Bootstrap danger button hover border color */
+  }
+</style>
+    {% if user.is_superuser %}
+    <form action="{% url 'add_num' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success btn-lg">Додати номер</button>
+    </form>
+    {% for num in nums %}
+    <div class="mt-4 p-5 bg-secondary text-white rounded">
+      <h2>{{ num.owner_id }}  :  {{ num.phone_number }}  :  {% if num.is_account_created == True %}Зайнято{% else %}Не зайнято{% endif %} <a href="{% url 'del_num' num.id %}" class="danger-link">Видалити</a></h2>
+    </div>
+    {% endfor %}
+    {% endif %}
 {% endblock %}
