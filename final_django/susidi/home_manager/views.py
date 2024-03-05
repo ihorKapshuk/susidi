@@ -4,7 +4,9 @@ from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from accounts.models import PhoneNumbers
-from .forms import AddPhoneForm
+from datetime import datetime
+from .models import Anon
+from .forms import AddPhoneForm, AddAnonForm
 
 # Create your views here.
 
@@ -14,7 +16,68 @@ def index(request):
 
 @login_required
 def announcements(request):
-    return render(request, "announcements.html")
+    data = Anon.objects.all().order_by("-id").values()
+    return render(request, "announcements.html", {"data" : data})
+
+@login_required
+def add_anon(request):
+    if request.method == "POST":
+        form = AddAnonForm(request.POST)
+        if form.is_valid():
+            my_obj = Anon()
+            cur_user = request.user
+            my_obj.post_author = cur_user.username
+
+            post_name = form.cleaned_data["post_name"]
+            my_obj.post_name = post_name
+
+            post_text = form.cleaned_data["post_text"]
+            my_obj.post_text = post_text
+
+            post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            my_obj.post_date = post_date
+
+            post_category = 1
+            my_obj.post_category = post_category
+            my_obj.save()
+            return HttpResponseRedirect("/home_manager/announcements/")
+    else:
+        form = AddAnonForm()
+    return render(request, "anon_form.html", context={"form" : form})
+
+@login_required
+def update_anon(request, id):
+    my_obj = Anon.objects.get(id=id)
+    if request.method == "POST":
+        form = AddAnonForm(request.POST)
+        if form.is_valid():
+            cur_user = request.user
+            my_obj.post_author = cur_user.username
+
+            post_name = form.cleaned_data["post_name"]
+            my_obj.post_name = post_name
+
+            post_text = form.cleaned_data["post_text"]
+            my_obj.post_text = post_text
+
+            post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            my_obj.post_date = post_date
+
+            post_category = 1
+            my_obj.post_category = post_category
+            my_obj.save()
+            return HttpResponseRedirect("/home_manager/announcements/")
+    else:
+        form = AddAnonForm()
+    return render(request, "anon_update.html", context={"form" : form})
+
+@login_required
+def del_anon(request, id):
+    obj = Anon.objects.get(id=id)
+    if request.method == "POST":
+        obj.delete()
+        return HttpResponseRedirect("/home_manager/announcements/")
+    return render(request, "anon_del.html", context={"obj" : obj})
 
 @login_required
 def complaints(request):

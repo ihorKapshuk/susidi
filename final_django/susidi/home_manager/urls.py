@@ -12,4 +12,7 @@ urlpatterns = [
     path("nums/", views.nums_control, name="nums"),
     path("add_num/", views.add_num, name="add_num"),
     path("del_num/<int:id>/", views.del_num, name="del_num"),
+    path("add_anon/", views.add_anon, name="add_anon"),
+    path("update_anon/<int:id>/", views.update_anon, name="update_anon"),
+    path("del_anon/<int:id>/", views.del_anon, name="del_anon"),
 ]
