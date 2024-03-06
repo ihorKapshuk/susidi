@@ -21,10 +21,11 @@ def announcements(request):
 
 @login_required
 def add_anon(request):
-    if request.method == "POST":
-        form = AddAnonForm(request.POST)
+    if request.method == 'POST':
+        form = AddAnonForm(request.POST, request.FILES)
         if form.is_valid():
             my_obj = Anon()
+
             cur_user = request.user
             my_obj.post_author = cur_user.username
 
@@ -33,6 +34,9 @@ def add_anon(request):
 
             post_text = form.cleaned_data["post_text"]
             my_obj.post_text = post_text
+
+            post_image = request.FILES.get("post_image")
+            my_obj.post_image = post_image
 
             post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
             my_obj.post_date = post_date
@@ -48,9 +52,11 @@ def add_anon(request):
 @login_required
 def update_anon(request, id):
     my_obj = Anon.objects.get(id=id)
-    if request.method == "POST":
-        form = AddAnonForm(request.POST)
+    if request.method == 'POST':
+        form = AddAnonForm(request.POST, request.FILES)
         if form.is_valid():
+            Anon.objects.get(id=id).post_image.delete(save=False)
+            
             cur_user = request.user
             my_obj.post_author = cur_user.username
 
@@ -59,6 +65,9 @@ def update_anon(request, id):
 
             post_text = form.cleaned_data["post_text"]
             my_obj.post_text = post_text
+
+            post_image = request.FILES.get("post_image")
+            my_obj.post_image = post_image
 
             post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
             my_obj.post_date = post_date
@@ -75,6 +84,7 @@ def update_anon(request, id):
 def del_anon(request, id):
     obj = Anon.objects.get(id=id)
     if request.method == "POST":
+        Anon.objects.get(id=id).post_image.delete(save=False)
         obj.delete()
         return HttpResponseRedirect("/home_manager/announcements/")
     return render(request, "anon_del.html", context={"obj" : obj})
