@@ -83,7 +83,7 @@
         <h1>Оголошення📣</h1>
         <p>На цій сторінці можете побачити оголошення від керівництва ОСББ.</p>
         {% if user.is_superuser %}
-        <form action="{% url 'add_anon' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
+        <form action="{% url 'add_anon' category %}" method="post" style="margin-top: 20px; margin-left: 45px;">
             {% csrf_token %}
             <button type="submit" class="btn btn-info btn-lg">Додати оголошення</button>
         </form>
@@ -99,8 +99,8 @@
         <b title="Нік автора">{{ anon.post_author }}</b><br>
         <i title="UTC">{{ anon.post_date }}</i>
         {% if user.is_superuser %}
-        <a href="{% url 'update_anon' anon.id %}" class="success-link">Змінити</a>
-        <a href="{% url 'del_anon' anon.id %}" class="danger-link">Видалити</a>
+        <a href="{% url 'update_anon' anon.id category %}" class="success-link">Змінити</a>
+        <a href="{% url 'del_anon' anon.id category %}" class="danger-link">Видалити</a>
         {% endif %}
         <a href="{% url 'anon_com' anon.id anon.post_category %}" class="warning-link">Коментарі</a>
     </div>

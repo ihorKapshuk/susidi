@@ -17,10 +17,14 @@ def index(request):
 @login_required
 def announcements(request):
     data = Anon.objects.all().filter(post_category=1).order_by("-id").values()
-    return render(request, "announcements.html", {"data" : data})
+    context = {
+        "data" : data,
+        "category" : 1
+    }
+    return render(request, "announcements.html", context=context)
 
 @login_required
-def add_anon(request):
+def add_anon(request, category):
     if request.method == 'POST':
         form = AddAnonForm(request.POST, request.FILES)
         if form.is_valid():
@@ -41,16 +45,24 @@ def add_anon(request):
             post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
             my_obj.post_date = post_date
 
-            post_category = 1
+            post_category = category
             my_obj.post_category = post_category
             my_obj.save()
-            return HttpResponseRedirect("/home_manager/announcements/")
+            match category:
+                case 1:
+                    return HttpResponseRedirect("/home_manager/announcements/")
+                case 2:
+                    return HttpResponseRedirect("/home_manager/complaints/")
+                case 3:
+                    return HttpResponseRedirect("/home_manager/lost/")
+                case 4:
+                    return HttpResponseRedirect("/home_manager/helpful/")
     else:
         form = AddAnonForm()
     return render(request, "anon_form.html", context={"form" : form})
 
 @login_required
-def update_anon(request, id):
+def update_anon(request, id, category):
     my_obj = Anon.objects.get(id=id)
     if request.method == 'POST':
         form = AddAnonForm(request.POST, request.FILES)
@@ -72,16 +84,24 @@ def update_anon(request, id):
             post_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
             my_obj.post_date = post_date
 
-            post_category = 1
+            post_category = category
             my_obj.post_category = post_category
             my_obj.save()
-            return HttpResponseRedirect("/home_manager/announcements/")
+            match category:
+                case 1:
+                    return HttpResponseRedirect("/home_manager/announcements/")
+                case 2:
+                    return HttpResponseRedirect("/home_manager/complaints/")
+                case 3:
+                    return HttpResponseRedirect("/home_manager/lost/")
+                case 4:
+                    return HttpResponseRedirect("/home_manager/helpful/")
     else:
         form = AddAnonForm()
     return render(request, "anon_update.html", context={"form" : form})
 
 @login_required
-def del_anon(request, id):
+def del_anon(request, id, category):
     obj = Anon.objects.get(id=id)
     if request.method == "POST":
         comments = Comment.objects.filter(com_post_id=id)
@@ -90,7 +110,15 @@ def del_anon(request, id):
             com.delete()
         Anon.objects.get(id=id).post_image.delete(save=False)
         obj.delete()
-        return HttpResponseRedirect("/home_manager/announcements/")
+        match category:
+            case 1:
+                return HttpResponseRedirect("/home_manager/announcements/")
+            case 2:
+                return HttpResponseRedirect("/home_manager/complaints/")
+            case 3:
+                return HttpResponseRedirect("/home_manager/lost/")
+            case 4:
+                return HttpResponseRedirect("/home_manager/helpful/")
     return render(request, "anon_del.html", context={"obj" : obj})
 
 @login_required
@@ -178,15 +206,30 @@ def del_com(request, id, this_post_id, category):
 
 @login_required
 def complaints(request):
-    return render(request, "complaints.html")
+    data = Anon.objects.all().filter(post_category=2).order_by("-id").values()
+    context = {
+        "data" : data,
+        "category" : 2
+    }
+    return render(request, "complaints.html", context=context)
 
 @login_required
 def lost(request):
-    return render(request, "lost.html")
+    data = Anon.objects.all().filter(post_category=3).order_by("-id").values()
+    context = {
+        "data" : data,
+        "category" : 3
+    }
+    return render(request, "lost.html", context=context)
 
 @login_required
 def helpful(request):
-    return render(request, "helpful.html")
+    data = Anon.objects.all().filter(post_category=4).order_by("-id").values()
+    context = {
+        "data" : data,
+        "category" : 4
+    }
+    return render(request, "helpful.html", context=context)
 
 @login_required
 def user_office(request):

@@ -56,7 +56,7 @@
   </style>
     {% if user.is_authenticated %}
     {% for anon in post_data %}
-    <div class="mt-4 p-5 bg-success text-white rounded">
+    <div class="mt-4 p-5 bg-secondary text-white rounded">
         <h1>{{ anon.post_name }}</h1>
         <p>{{ anon.post_text }}</p>
         {% if anon.post_image %}
@@ -68,7 +68,7 @@
     </div>
     {% endfor %}
     {% for comm in com_data %}
-    <div class="mt-4 alert alert-success" role="alert">
+    <div class="mt-4 alert alert-secondary" role="alert">
         <p>{{ comm.com_text }}</p>
         {% if comm.com_image %}
         <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>

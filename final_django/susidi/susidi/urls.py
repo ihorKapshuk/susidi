@@ -19,8 +19,10 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.shortcuts import redirect
 
 urlpatterns = [
+    path('', lambda req: redirect('/home_manager/')),
     path('admin/', admin.site.urls),
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),

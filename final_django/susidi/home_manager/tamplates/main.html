@@ -5,19 +5,19 @@
 {% block content %}
     {% if user.is_authenticated %}
     <div class="mt-4 p-5 bg-success text-white rounded">
-        <h1><a href="http://127.0.0.1:8000/home_manager/announcements/" class="text-white">Оголошення</a>📣</h1>
+        <h1><a href="{% url 'announcements' %}" class="text-white">Оголошення</a>📣</h1>
         <p>На цій сторінці можете побачити оголошення від керівництва ОСББ.</p>
     </div>
     <div class="mt-4 p-5 bg-danger text-white rounded">
-        <h1><a href="http://127.0.0.1:8000/home_manager/complaints/" class="text-white">Скарги</a>🙁</h1>
+        <h1><a href="{% url 'complaints' %}" class="text-white">Скарги</a>🙁</h1>
         <p>На цій сторінці можете розмістити скаргу (до керівництва ОСББ чи інших жителів дома) та побачити скарги інших.</p>
     </div>
     <div class="mt-4 p-5 bg-info text-white rounded">
-        <h1><a href="http://127.0.0.1:8000/home_manager/lost/" class="text-white">Загублені речі</a>🕵️</h1>
+        <h1><a href="{% url 'lost' %}" class="text-white">Загублені речі</a>🕵️</h1>
         <p>На цій сторінці можете повідомити про знахідку чи розмістити оголошення про пошук речі.</p>
     </div>
     <div class="mt-4 p-5 bg-primary text-white rounded">
-        <h1><a href="http://127.0.0.1:8000/home_manager/helpful/" class="text-white">Корисна інформація</a>😀</h1>
+        <h1><a href="{% url 'helpful' %}" class="text-white">Корисна інформація</a>😀</h1>
         <p>На цій сторінці можете отримати контактну інформацію керівництва ОСББ та комунальних служб.</p>
     </div>
     {% endif %}

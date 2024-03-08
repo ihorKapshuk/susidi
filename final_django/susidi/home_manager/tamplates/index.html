@@ -14,14 +14,14 @@
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary bg-warning fixed-top">
         <div class="container-fluid">
-          <a class="navbar-brand text-dark" href="http://127.0.0.1:8000/home_manager/main/">Головна </a>
+          <a class="navbar-brand text-dark" href="{% url 'main' %}">Головна </a>
           <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
-              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/announcements/">Оголошення для жителів</a>
-              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/complaints/">Скарги</a>
-              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/lost/">Загублені речі</a>
-              <a class="nav-link text-dark" href="http://127.0.0.1:8000/home_manager/helpful/">Корисна інформація</a>
-              <a class="nav-link text-danger" href="http://127.0.0.1:8000/home_manager/user_office/" id="user_office">Особистий кабінет</a>
+              <a class="nav-link text-dark" href="{% url 'announcements' %}">Оголошення для жителів</a>
+              <a class="nav-link text-dark" href="{% url 'complaints' %}">Скарги</a>
+              <a class="nav-link text-dark" href="{% url 'lost' %}">Загублені речі</a>
+              <a class="nav-link text-dark" href="{% url 'helpful' %}">Корисна інформація</a>
+              <a class="nav-link text-danger" href="{% url 'user_office' %}" id="user_office">Особистий кабінет</a>
             </div>
           </div>
         </div>
@@ -33,12 +33,12 @@
     </main>
     <footer class="py-3 mt-4 bg-secondary">
       <ul class="nav justify-content-center border-bottom border-dark pb-3 mb-3">
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/main/" class="nav-link px-2 text-body-secondary text-light">Головна</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/announcements/" class="nav-link px-2 text-body-secondary text-light">Оголошення для жителів</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/complaints/" class="nav-link px-2 text-body-secondary text-light">Скарги</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/lost/" class="nav-link px-2 text-body-secondary text-light">Загублені речі</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/helpful/" class="nav-link px-2 text-body-secondary text-light">Корисна інформація</a></li>
-        <li class="nav-item"><a href="http://127.0.0.1:8000/home_manager/user_office/" class="nav-link px-2 text-body-secondary text-light">Особистий кабінет</a></li>
+        <li class="nav-item"><a href="{% url 'main' %}" class="nav-link px-2 text-body-secondary text-light">Головна</a></li>
+        <li class="nav-item"><a href="{% url 'announcements' %}" class="nav-link px-2 text-body-secondary text-light">Оголошення для жителів</a></li>
+        <li class="nav-item"><a href="{% url 'complaints' %}" class="nav-link px-2 text-body-secondary text-light">Скарги</a></li>
+        <li class="nav-item"><a href="{% url 'lost' %}" class="nav-link px-2 text-body-secondary text-light">Загублені речі</a></li>
+        <li class="nav-item"><a href="{% url 'helpful' %}" class="nav-link px-2 text-body-secondary text-light">Корисна інформація</a></li>
+        <li class="nav-item"><a href="{% url 'user_office' %}" class="nav-link px-2 text-body-secondary text-light">Особистий кабінет</a></li>
       </ul>
       <p class="text-center text-body-secondary text-light">© 2024 Сусіди</p>
     </footer>

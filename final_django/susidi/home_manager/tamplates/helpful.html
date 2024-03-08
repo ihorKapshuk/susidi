@@ -3,10 +3,107 @@
 {% block title %}Корисна інформація{% endblock %}
 
 {% block content %}
+<style>
+    /* Styles for the success button */
+    .success-link {
+      display: inline-block;
+      padding: 6px 12px;
+      margin: 10px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.42857143;
+      text-align: center;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      color: #fff;
+      background-color: #5cb85c; /* Bootstrap success button color */
+      border-color: #4cae4c; /* Bootstrap success button border color */
+      text-decoration: none;
+    }
+  
+    /* Hover effect for the success button */
+    .success-link:hover {
+      background-color: #4cae4c; /* Bootstrap success button hover color */
+      border-color: #4cae4c; /* Bootstrap success button hover border color */
+    }
+    .danger-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #d9534f; /* Bootstrap danger button color */
+    border-color: #d43f3a; /* Bootstrap danger button border color */
+    text-decoration: none;
+  }
+
+  /* Hover effect for the danger button */
+  .danger-link:hover {
+    background-color: #d2322d; /* Bootstrap danger button hover color */
+    border-color: #ac2925; /* Bootstrap danger button hover border color */
+  }
+  .warning-link {
+    display: inline-block;
+    padding: 6px 12px;
+    margin: 10px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #f0ad4e; /* Bootstrap warning button color */
+    border-color: #eea236; /* Bootstrap warning button border color */
+    text-decoration: none;
+  }
+
+  /* Hover effect for the warning button */
+  .warning-link:hover {
+    background-color: #ec971f; /* Bootstrap warning button hover color */
+    border-color: #d58512; /* Bootstrap warning button hover border color */
+  }
+  </style>
     {% if user.is_authenticated %}
     <div class="mt-4 p-5 bg-primary text-white rounded">
         <h1>Корисна інформація😀</h1>
         <p>На цій сторінці можете отримати контактну інформацію керівництва ОСББ та комунальних служб.</p>
+        {% if user.is_superuser %}
+        <form action="{% url 'add_anon' category %}" method="post" style="margin-top: 20px; margin-left: 45px;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-info btn-lg">Додати оголошення</button>
+        </form>
+        {% endif %}
     </div>
+    {% for anon in data %}
+    <div class="mt-4 alert alert-primary" role="alert">
+        <h2>{{ anon.post_name }}</h2>
+        <p>{{ anon.post_text }}</p>
+        {% if anon.post_image %}
+        <img src="{{ MEDIA_URL }}{{ anon.post_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ anon.post_author }}</b><br>
+        <i title="UTC">{{ anon.post_date }}</i>
+        {% if user.is_superuser %}
+        <a href="{% url 'update_anon' anon.id category %}" class="success-link">Змінити</a>
+        <a href="{% url 'del_anon' anon.id category %}" class="danger-link">Видалити</a>
+        {% endif %}
+        <a href="{% url 'anon_com' anon.id anon.post_category %}" class="warning-link">Коментарі</a>
+    </div>
+    {% endfor %}
     {% endif %}
 {% endblock %}
