@@ -1,16 +1,16 @@
 {% extends "reg_index.html" %}
 
-{% block title %}Редагування посту{% endblock %}
+{% block title %}Додавання коменту{% endblock %}
 
 {% load crispy_forms_tags %}
 
 {% block content %}
-{% if user.is_superuser %}
+{% if user.is_authenticated %}
 <div>
 <form method="post" enctype="multipart/form-data">
   {% csrf_token %}
   {{ form|crispy }}
-  <button type="submit" class="btn btn-primary btn-lg">Зберегти</button>
+  <button type="submit" class="btn btn-primary btn-lg">Додати</button>
 </form>
 </div>
 {% endif %}

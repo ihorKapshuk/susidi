@@ -1,6 +1,6 @@
 {% extends "index.html" %}
 
-{% block title %}Оголошення{% endblock %}
+{% block title %}Коментарі{% endblock %}
 
 {% block content %}
 <style>
@@ -53,56 +53,36 @@
     background-color: #d2322d; /* Bootstrap danger button hover color */
     border-color: #ac2925; /* Bootstrap danger button hover border color */
   }
-  .warning-link {
-    display: inline-block;
-    padding: 6px 12px;
-    margin: 10px;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 1.42857143;
-    text-align: center;
-    white-space: nowrap;
-    vertical-align: middle;
-    cursor: pointer;
-    border: 1px solid transparent;
-    border-radius: 4px;
-    color: #fff;
-    background-color: #f0ad4e; /* Bootstrap warning button color */
-    border-color: #eea236; /* Bootstrap warning button border color */
-    text-decoration: none;
-  }
-
-  /* Hover effect for the warning button */
-  .warning-link:hover {
-    background-color: #ec971f; /* Bootstrap warning button hover color */
-    border-color: #d58512; /* Bootstrap warning button hover border color */
-  }
   </style>
     {% if user.is_authenticated %}
+    {% for anon in post_data %}
     <div class="mt-4 p-5 bg-success text-white rounded">
-        <h1>Оголошення📣</h1>
-        <p>На цій сторінці можете побачити оголошення від керівництва ОСББ.</p>
-        {% if user.is_superuser %}
-        <form action="{% url 'add_anon' %}" method="post" style="margin-top: 20px; margin-left: 45px;">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-info btn-lg">Додати оголошення</button>
-        </form>
-        {% endif %}
-    </div>
-    {% for anon in data %}
-    <div class="mt-4 alert alert-success" role="alert">
-        <h2>{{ anon.post_name }}</h2>
+        <h1>{{ anon.post_name }}</h1>
         <p>{{ anon.post_text }}</p>
         {% if anon.post_image %}
         <img src="{{ MEDIA_URL }}{{ anon.post_image }}" alt=""><br>
         {% endif %}
         <b title="Нік автора">{{ anon.post_author }}</b><br>
         <i title="UTC">{{ anon.post_date }}</i>
-        {% if user.is_superuser %}
-        <a href="{% url 'update_anon' anon.id %}" class="success-link">Змінити</a>
-        <a href="{% url 'del_anon' anon.id %}" class="danger-link">Видалити</a>
+        <a href="{% url 'add_com' anon.id  anon.post_category %}" class="success-link">Додати коментар</a>
+    </div>
+    {% endfor %}
+    {% for comm in com_data %}
+    <div class="mt-4 alert alert-success" role="alert">
+        <p>{{ comm.com_text }}</p>
+        {% if comm.com_image %}
+        <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>
         {% endif %}
-        <a href="{% url 'anon_com' anon.id anon.post_category %}" class="warning-link">Коментарі</a>
+        <b title="Нік автора">{{ comm.com_author }}</b><br>
+        <i title="UTC">{{ comm.com_date }}</i>
+        {% if user.username == comm.com_author %}
+        <a href="{% url 'update_com' comm.id comm.com_post_id comm.com_category %}" class="success-link">Змінити</a>
+        {% endif %}
+        {% if user.is_superuser %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% elif user.username == comm.com_author %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% endif %}
     </div>
     {% endfor %}
     {% endif %}

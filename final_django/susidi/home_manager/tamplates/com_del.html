@@ -1,6 +1,6 @@
 {% extends "reg_index.html" %}
 
-{% block title %}Видалення посту{% endblock %}
+{% block title %}Видалення коменту{% endblock %}
 
 {% load crispy_forms_tags %}
 
@@ -35,12 +35,12 @@
   }
 </style>
 <div>
-{% if user.is_superuser %}
+{% if user.is_authenticated %}
 <form action="" method="post">
   {% csrf_token %}
-  <h1>Хочите видалити пост?</h1>
+  <h1>Хочите видалити коментар?</h1>
   <input type="submit" value="Так" class="btn btn-danger"><br>
-  <a href="{% url 'announcements' %}" class="success-link">Ні</a>
+  <a href="{% url 'anon_com' id category %}" class="success-link">Ні</a>
 </form>
 </div>
 {% endif %}

@@ -6,5 +6,9 @@ class AddPhoneForm(forms.Form):
 
 class AddAnonForm(forms.Form):
     post_name = forms.CharField(max_length=100, label="Назва посту")
-    post_text = forms.CharField(max_length=100, label="Назва посту")
-    post_image = forms.ImageField(label="")
+    post_text = forms.CharField(max_length=250, label="Пост")
+    post_image = forms.ImageField(label="", required=False)
+
+class AddCommentForm(forms.Form):
+    com_text = forms.CharField(max_length=250, label="Коментар")
+    com_image = forms.ImageField(label="", required=False)

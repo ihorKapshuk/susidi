@@ -5,8 +5,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib.auth.decorators import login_required
 from accounts.models import PhoneNumbers
 from datetime import datetime
-from .models import Anon
-from .forms import AddPhoneForm, AddAnonForm
+from .models import Anon, Comment
+from .forms import AddPhoneForm, AddAnonForm, AddCommentForm
 
 # Create your views here.
 
@@ -16,7 +16,7 @@ def index(request):
 
 @login_required
 def announcements(request):
-    data = Anon.objects.all().order_by("-id").values()
+    data = Anon.objects.all().filter(post_category=1).order_by("-id").values()
     return render(request, "announcements.html", {"data" : data})
 
 @login_required
@@ -84,10 +84,97 @@ def update_anon(request, id):
 def del_anon(request, id):
     obj = Anon.objects.get(id=id)
     if request.method == "POST":
+        comments = Comment.objects.filter(com_post_id=id)
+        for com in comments:
+            com.com_image.delete(save=False)
+            com.delete()
         Anon.objects.get(id=id).post_image.delete(save=False)
         obj.delete()
         return HttpResponseRedirect("/home_manager/announcements/")
     return render(request, "anon_del.html", context={"obj" : obj})
+
+@login_required
+def anon_com(requset, id, category):
+    post_data = Anon.objects.filter(id=id)
+    com_data = Comment.objects.all().filter(com_category=category, com_post_id=id).order_by("-id").values()
+    context = {
+        "post_data" : post_data,
+        "com_data" : com_data
+    }
+    return render(requset, "anon_comments.html", context=context)
+
+@login_required
+def add_com(request, id, category):
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            my_obj = Comment()
+
+            com_post_id = id
+            my_obj.com_post_id = com_post_id
+
+            cur_user = request.user
+            my_obj.com_author = cur_user.username
+
+            com_text = form.cleaned_data["com_text"]
+            my_obj.com_text = com_text
+
+            com_image = request.FILES.get("com_image")
+            my_obj.com_image = com_image
+
+            com_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            my_obj.com_date = com_date
+
+            com_category = category
+            my_obj.com_category = com_category
+            my_obj.save()
+            return HttpResponseRedirect(f"/home_manager/anon_com/{id}/{category}/")
+    else:
+        form = AddCommentForm()
+    return render(request, "com_form.html", context={"form" : form})
+
+@login_required
+def update_com(request, id, this_post_id, category):
+    my_obj = Comment.objects.get(id=id)
+    if request.method == 'POST':
+        form = AddCommentForm(request.POST, request.FILES)
+        if form.is_valid():
+            com_post_id = this_post_id
+            my_obj.com_post_id = com_post_id
+
+            cur_user = request.user
+            my_obj.com_author = cur_user.username
+
+            com_text = form.cleaned_data["com_text"]
+            my_obj.com_text = com_text
+
+            com_image = request.FILES.get("com_image")
+            my_obj.com_image = com_image
+
+            com_date = datetime.utcnow().strftime('%Y-%m-%d %H:%M:%S')
+            my_obj.com_date = com_date
+
+            com_category = category
+            my_obj.com_category = com_category
+            my_obj.save()
+            return HttpResponseRedirect(f"/home_manager/anon_com/{this_post_id}/{category}/")
+    else:
+        form = AddCommentForm()
+    return render(request, "com_update.html", context={"form" : form})
+
+@login_required
+def del_com(request, id, this_post_id, category):
+    obj = Comment.objects.get(id=id)
+    if request.method == "POST":
+        Comment.objects.get(id=id).com_image.delete(save=False)
+        obj.delete()
+        return HttpResponseRedirect(f"/home_manager/anon_com/{this_post_id}/{category}/")
+    context = {
+        "obj" : obj,
+        "id" : this_post_id,
+        "category" : category
+    }
+    return render(request, "com_del.html", context=context)
 
 @login_required
 def complaints(request):
