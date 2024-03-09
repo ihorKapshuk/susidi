@@ -55,8 +55,9 @@
   }
   </style>
     {% if user.is_authenticated %}
+    {% if category == 1 %}
     {% for anon in post_data %}
-    <div class="mt-4 p-5 bg-secondary text-white rounded">
+    <div class="mt-4 p-5 bg-success text-white rounded">
         <h1>{{ anon.post_name }}</h1>
         <p>{{ anon.post_text }}</p>
         {% if anon.post_image %}
@@ -68,7 +69,7 @@
     </div>
     {% endfor %}
     {% for comm in com_data %}
-    <div class="mt-4 alert alert-secondary" role="alert">
+    <div class="mt-4 alert alert-success" role="alert">
         <p>{{ comm.com_text }}</p>
         {% if comm.com_image %}
         <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>
@@ -85,5 +86,99 @@
         {% endif %}
     </div>
     {% endfor %}
+    {% elif category == 2 %}
+    {% for anon in post_data %}
+    <div class="mt-4 p-5 bg-danger text-white rounded">
+        <h1>{{ anon.post_name }}</h1>
+        <p>{{ anon.post_text }}</p>
+        {% if anon.post_image %}
+        <img src="{{ MEDIA_URL }}{{ anon.post_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ anon.post_author }}</b><br>
+        <i title="UTC">{{ anon.post_date }}</i>
+        <a href="{% url 'add_com' anon.id  anon.post_category %}" class="success-link">Додати коментар</a>
+    </div>
+    {% endfor %}
+    {% for comm in com_data %}
+    <div class="mt-4 alert alert-danger" role="alert">
+        <p>{{ comm.com_text }}</p>
+        {% if comm.com_image %}
+        <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ comm.com_author }}</b><br>
+        <i title="UTC">{{ comm.com_date }}</i>
+        {% if user.username == comm.com_author %}
+        <a href="{% url 'update_com' comm.id comm.com_post_id comm.com_category %}" class="success-link">Змінити</a>
+        {% endif %}
+        {% if user.is_superuser %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% elif user.username == comm.com_author %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% elif category == 3 %}
+    {% for anon in post_data %}
+    <div class="mt-4 p-5 bg-info text-white rounded">
+        <h1>{{ anon.post_name }}</h1>
+        <p>{{ anon.post_text }}</p>
+        {% if anon.post_image %}
+        <img src="{{ MEDIA_URL }}{{ anon.post_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ anon.post_author }}</b><br>
+        <i title="UTC">{{ anon.post_date }}</i>
+        <a href="{% url 'add_com' anon.id  anon.post_category %}" class="success-link">Додати коментар</a>
+    </div>
+    {% endfor %}
+    {% for comm in com_data %}
+    <div class="mt-4 alert alert-info" role="alert">
+        <p>{{ comm.com_text }}</p>
+        {% if comm.com_image %}
+        <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ comm.com_author }}</b><br>
+        <i title="UTC">{{ comm.com_date }}</i>
+        {% if user.username == comm.com_author %}
+        <a href="{% url 'update_com' comm.id comm.com_post_id comm.com_category %}" class="success-link">Змінити</a>
+        {% endif %}
+        {% if user.is_superuser %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% elif user.username == comm.com_author %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% elif category == 4 %}
+    {% for anon in post_data %}
+    <div class="mt-4 p-5 bg-primary text-white rounded">
+        <h1>{{ anon.post_name }}</h1>
+        <p>{{ anon.post_text }}</p>
+        {% if anon.post_image %}
+        <img src="{{ MEDIA_URL }}{{ anon.post_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ anon.post_author }}</b><br>
+        <i title="UTC">{{ anon.post_date }}</i>
+        <a href="{% url 'add_com' anon.id  anon.post_category %}" class="success-link">Додати коментар</a>
+    </div>
+    {% endfor %}
+    {% for comm in com_data %}
+    <div class="mt-4 alert alert-primary" role="alert">
+        <p>{{ comm.com_text }}</p>
+        {% if comm.com_image %}
+        <img src="{{ MEDIA_URL }}{{ comm.com_image }}" alt=""><br>
+        {% endif %}
+        <b title="Нік автора">{{ comm.com_author }}</b><br>
+        <i title="UTC">{{ comm.com_date }}</i>
+        {% if user.username == comm.com_author %}
+        <a href="{% url 'update_com' comm.id comm.com_post_id comm.com_category %}" class="success-link">Змінити</a>
+        {% endif %}
+        {% if user.is_superuser %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% elif user.username == comm.com_author %}
+        <a href="{% url 'del_com' comm.id comm.com_post_id comm.com_category %}" class="danger-link">Видалити</a>
+        {% endif %}
+    </div>
+    {% endfor %}
+    {% endif %}
     {% endif %}
 {% endblock %}

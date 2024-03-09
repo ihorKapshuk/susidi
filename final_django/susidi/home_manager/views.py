@@ -127,7 +127,8 @@ def anon_com(requset, id, category):
     com_data = Comment.objects.all().filter(com_category=category, com_post_id=id).order_by("-id").values()
     context = {
         "post_data" : post_data,
-        "com_data" : com_data
+        "com_data" : com_data,
+        "category" : category
     }
     return render(requset, "anon_comments.html", context=context)
 
