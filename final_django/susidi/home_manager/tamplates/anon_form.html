@@ -5,6 +5,15 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+{% if category == 2 or category == 3 %}
+<div>
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form|crispy }}
+    <button type="submit" class="btn btn-primary btn-lg">Додати</button>
+  </form>
+  </div>
+{% elif category == 1 or category == 4 %}
 {% if user.is_superuser %}
 <div>
 <form method="post" enctype="multipart/form-data">
@@ -13,5 +22,6 @@
   <button type="submit" class="btn btn-primary btn-lg">Додати</button>
 </form>
 </div>
+{% endif %}
 {% endif %}
 {% endblock %}

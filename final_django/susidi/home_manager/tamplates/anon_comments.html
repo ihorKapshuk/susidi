@@ -4,7 +4,6 @@
 
 {% block content %}
 <style>
-    /* Styles for the success button */
     .success-link {
       display: inline-block;
       padding: 6px 12px;
@@ -19,16 +18,16 @@
       border: 1px solid transparent;
       border-radius: 4px;
       color: #fff;
-      background-color: #5cb85c; /* Bootstrap success button color */
-      border-color: #4cae4c; /* Bootstrap success button border color */
+      background-color: #5cb85c;
+      border-color: #4cae4c;
       text-decoration: none;
     }
   
-    /* Hover effect for the success button */
     .success-link:hover {
-      background-color: #4cae4c; /* Bootstrap success button hover color */
-      border-color: #4cae4c; /* Bootstrap success button hover border color */
+      background-color: #4cae4c;
+      border-color: #4cae4c;
     }
+
     .danger-link {
     display: inline-block;
     padding: 6px 12px;
@@ -43,15 +42,14 @@
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
-    background-color: #d9534f; /* Bootstrap danger button color */
-    border-color: #d43f3a; /* Bootstrap danger button border color */
+    background-color: #d9534f;
+    border-color: #d43f3a;
     text-decoration: none;
   }
 
-  /* Hover effect for the danger button */
   .danger-link:hover {
-    background-color: #d2322d; /* Bootstrap danger button hover color */
-    border-color: #ac2925; /* Bootstrap danger button hover border color */
+    background-color: #d2322d;
+    border-color: #ac2925;
   }
   </style>
     {% if user.is_authenticated %}

@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class SignUpForm(UserCreationForm):
-    phone_number = forms.CharField(max_length=10, help_text='Потрібен для підтвердження мешканця.', label="Номер телефону")
+    phone_number = forms.CharField(max_length=10, help_text='Починаючи з 0 (10 цифр).', label="Номер телефону")
 
     class Meta:
         model = User

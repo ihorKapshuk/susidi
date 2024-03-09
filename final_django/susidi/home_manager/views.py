@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render
 from django.contrib.auth.models import User
 from django.http import HttpResponseRedirect
 from django.core.exceptions import ObjectDoesNotExist
@@ -59,7 +59,7 @@ def add_anon(request, category):
                     return HttpResponseRedirect("/home_manager/helpful/")
     else:
         form = AddAnonForm()
-    return render(request, "anon_form.html", context={"form" : form})
+    return render(request, "anon_form.html", context={"form" : form, "category" : category})
 
 @login_required
 def update_anon(request, id, category):
@@ -98,7 +98,7 @@ def update_anon(request, id, category):
                     return HttpResponseRedirect("/home_manager/helpful/")
     else:
         form = AddAnonForm()
-    return render(request, "anon_update.html", context={"form" : form})
+    return render(request, "anon_update.html", context={"form" : form, "category" : category})
 
 @login_required
 def del_anon(request, id, category):
@@ -119,7 +119,7 @@ def del_anon(request, id, category):
                 return HttpResponseRedirect("/home_manager/lost/")
             case 4:
                 return HttpResponseRedirect("/home_manager/helpful/")
-    return render(request, "anon_del.html", context={"obj" : obj})
+    return render(request, "anon_del.html", context={"obj" : obj, "category" : category})
 
 @login_required
 def anon_com(requset, id, category):

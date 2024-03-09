@@ -6,7 +6,6 @@
 
 {% block content %}
 <style>
-  /* Styles for the success button */
   .success-link {
     display: inline-block;
     padding: 6px 12px;
@@ -22,26 +21,44 @@
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
-    background-color: #5cb85c; /* Bootstrap success button color */
-    border-color: #4cae4c; /* Bootstrap success button border color */
+    background-color: #5cb85c;
+    border-color: #4cae4c;
     text-decoration: none;
     width: 258px;
   }
 
-  /* Hover effect for the success button */
   .success-link:hover {
-    background-color: #4cae4c; /* Bootstrap success button hover color */
-    border-color: #4cae4c; /* Bootstrap success button hover border color */
+    background-color: #4cae4c;
+    border-color: #4cae4c;
   }
 </style>
+{% if category == 2 or category == 3 %}
 <div>
+  <form action="" method="post">
+    {% csrf_token %}
+    <h1>Хочите видалити пост?</h1>
+    <input type="submit" value="Так" class="btn btn-danger"><br>
+    {% if category == 2 %}
+    <a href="{% url 'complaints' %}" class="success-link">Ні</a>
+    {% elif category == 3 %}
+    <a href="{% url 'lost' %}" class="success-link">Ні</a>
+    {% endif %}
+  </form>
+  </div>
+{% elif category == 1 or category == 4 %}
 {% if user.is_superuser %}
+<div>
 <form action="" method="post">
   {% csrf_token %}
   <h1>Хочите видалити пост?</h1>
   <input type="submit" value="Так" class="btn btn-danger"><br>
+  {% if category == 1 %}
   <a href="{% url 'announcements' %}" class="success-link">Ні</a>
+  {% elif category == 4 %}
+  <a href="{% url 'helpful' %}" class="success-link">Ні</a>
+  {% endif %}
 </form>
 </div>
+{% endif %}
 {% endif %}
 {% endblock %}

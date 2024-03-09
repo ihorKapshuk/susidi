@@ -4,7 +4,6 @@
 
 {% block content %}
 <style>
-    /* Styles for the success button */
     .success-link {
       display: inline-block;
       padding: 6px 12px;
@@ -19,15 +18,14 @@
       border: 1px solid transparent;
       border-radius: 4px;
       color: #fff;
-      background-color: #5cb85c; /* Bootstrap success button color */
-      border-color: #4cae4c; /* Bootstrap success button border color */
+      background-color: #5cb85c;
+      border-color: #4cae4c;
       text-decoration: none;
     }
   
-    /* Hover effect for the success button */
     .success-link:hover {
-      background-color: #4cae4c; /* Bootstrap success button hover color */
-      border-color: #4cae4c; /* Bootstrap success button hover border color */
+      background-color: #4cae4c;
+      border-color: #4cae4c;
     }
     .danger-link {
     display: inline-block;
@@ -43,15 +41,14 @@
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
-    background-color: #d9534f; /* Bootstrap danger button color */
-    border-color: #d43f3a; /* Bootstrap danger button border color */
+    background-color: #d9534f;
+    border-color: #d43f3a;
     text-decoration: none;
   }
 
-  /* Hover effect for the danger button */
   .danger-link:hover {
-    background-color: #d2322d; /* Bootstrap danger button hover color */
-    border-color: #ac2925; /* Bootstrap danger button hover border color */
+    background-color: #d2322d;
+    border-color: #ac2925;
   }
   .warning-link {
     display: inline-block;
@@ -67,15 +64,14 @@
     border: 1px solid transparent;
     border-radius: 4px;
     color: #fff;
-    background-color: #f0ad4e; /* Bootstrap warning button color */
-    border-color: #eea236; /* Bootstrap warning button border color */
+    background-color: #f0ad4e;
+    border-color: #eea236;
     text-decoration: none;
   }
 
-  /* Hover effect for the warning button */
   .warning-link:hover {
-    background-color: #ec971f; /* Bootstrap warning button hover color */
-    border-color: #d58512; /* Bootstrap warning button hover border color */
+    background-color: #ec971f;
+    border-color: #d58512;
   }
   </style>
     {% if user.is_authenticated %}
@@ -97,6 +93,8 @@
         <b title="Нік автора">{{ anon.post_author }}</b><br>
         <i title="UTC">{{ anon.post_date }}</i>
         {% if user.is_superuser %}
+        <a href="{% url 'del_anon' anon.id category %}" class="danger-link">Видалити</a>
+        {% elif user.username == anon.post_author %}
         <a href="{% url 'update_anon' anon.id category %}" class="success-link">Змінити</a>
         <a href="{% url 'del_anon' anon.id category %}" class="danger-link">Видалити</a>
         {% endif %}
