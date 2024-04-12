@@ -7,9 +7,9 @@ a.Comments compete for attention of users with posts
 b.Unnecessary personal conversation between users appears in the chat
 
 Project requirements:
-Python 3.11+
-Django 5.0.1
-Bootstrap 5
-Django-crispy-forms
-Pillow
+Python 3.11+;
+Django 5.0.1;
+Bootstrap 5;
+Django-crispy-forms;
+Pillow;
 PostgreSQL 16.1.
